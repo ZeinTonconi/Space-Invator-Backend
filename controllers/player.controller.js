@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs')
 
 let playersDB = [];
@@ -18,6 +19,7 @@ const getAllPlayers = (req,res) => {
     res.send(playersDB);
 }   
 
+
 const addPlayer = (req,res) => {
 
     if(!req.body.name || req.body.score == undefined){
@@ -34,6 +36,20 @@ const addPlayer = (req,res) => {
     }
 
     playersDB.push(player);
+
+    while(playersDB.length > process.env.NUM_PLAYER_LIMIT){
+
+        let minScore = process.env.MAX_SCORE;
+        let minScoreID;
+        playersDB.forEach( (player, index) => {
+            if( minScore > player.score ){
+                minScore = player.score;
+                minScoreID = index;
+            }
+        })
+        playersDB.splice(minScoreID,1);
+    }
+
     fs.writeFile(pathDB, JSON.stringify(playersDB), (err) => {
         if(err)
             console.log("Error to Save", err)
