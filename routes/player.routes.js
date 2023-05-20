@@ -1,16 +1,11 @@
 const { Router } = require("express");
-
+const { getAllPlayers, addPlayer } = require("../controllers/player.controller");
 
 const router = Router();
 
-router.get('/',( req, res ) => {
-    res.send("Player Get");
-})
+router.get('/',getAllPlayers)
 
-router.post('/', ( req, res ) => {
-    console.log("Player Post", req.body);
-    res.send(req.body);
-})
+router.post('/', addPlayer)
 
 router.put('/', ( req, res ) => {
     res.send("Player Update");
