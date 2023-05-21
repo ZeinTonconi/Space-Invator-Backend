@@ -22,10 +22,13 @@ class Server {
         })
     }
 
+    // Antes de procesar la peticion haz esto
     middlewares() {
 
+        // arregla el errror de cors
         this.app.use(cors())
 
+        // Convertir los datos recibido en json
         this.app.use(express.json());
     }
 
