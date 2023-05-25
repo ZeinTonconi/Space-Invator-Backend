@@ -19,7 +19,13 @@ fs.readFile(pathDB, (err, data) => {
 
 
 const getAllPlayers = (req,res) => {
-    res.send(playersDB);
+
+    const sortedDB = [...playersDB]
+    sortedDB.sort( (a,b) => {
+        return b.score-a.score;
+    })
+
+    res.send(sortedDB);
 }   
 
 
